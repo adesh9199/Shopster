@@ -1,0 +1,78 @@
+<%- include('./partials/header') %>
+
+<%- include('./partials/footer') %>
+
+<div class="w-full h-screen flex items-center justify-center bg-gray-900">
+    <div class="flex items-center w-full max-w-6xl">
+        <!-- Register Section -->
+        <div class="w-1/2 bg-white bg-opacity-80 flex items-center justify-center rounded-lg shadow-md p-8 transition-transform duration-500 ease-in-out transform hover:scale-105 hover:bg-opacity-90" id="register-section">
+            <div class="w-full">
+                <h3 class="text-4xl mb-4">Welcome to <span class="text-blue-400 font-semibold">Pitara</span></h3>
+                <h4 class="text-2xl mb-5">Create your account</h4>
+                <form autocomplete="off" action="/user/register" method="post">
+                    <input
+                        class="bg-gray-100 block w-full px-3 py-2 border-[1px] rounded-md mb-3 border-gray-300 transition-colors duration-300 ease-in-out focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                        type="text" placeholder="Full Name" required name="fullname">
+                    <input
+                        class="bg-gray-100 block w-full px-3 py-2 border-[1px] rounded-md mb-3 border-gray-300 transition-colors duration-300 ease-in-out focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                        type="email" placeholder="Email" required name="email">
+                    <input
+                        class="bg-gray-100 block w-full px-3 py-2 border-[1px] rounded-md mb-3 border-gray-300 transition-colors duration-300 ease-in-out focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                        type="password" placeholder="Password" required name="password">
+                    <input class="px-5 rounded-full py-3 mt-2 bg-blue-500 text-white cursor-pointer transition-transform duration-300 ease-in-out hover:bg-blue-600"
+                        type="submit" value="Create My Account">
+                </form>
+            </div>
+        </div>
+        
+        <!-- Vertical Line -->
+        <div class="w-2 h-full bg-black"></div>
+
+        <!-- Login Section -->
+        <div class="w-1/2 ml-14 h-1/2 bg-blue-50 bg-opacity-80 flex items-center justify-center rounded-lg shadow-md p-8 transition-transform duration-500 ease-in-out transform hover:scale-105 hover:bg-opacity-90" id="login-section">
+            <div class="w-full">
+                <h4 class="text-2xl mb-5">Login to your account</h4>
+                <form autocomplete="off" action="/user/login" method="post">
+                    <input
+                        class="block bg-white w-full px-3 py-2 border-[1px] rounded-md mb-3 border-gray-300 transition-colors duration-300 ease-in-out focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                        type="email" placeholder="Email" required name="email">
+                    <input
+                        class="block bg-white w-full px-3 py-2 border-[1px] rounded-md mb-3 border-gray-300 transition-colors duration-300 ease-in-out focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                        type="password" placeholder="Password" required name="password">
+                    <input class="px-5 block rounded-full py-3 mt-2 bg-blue-500 text-white cursor-pointer transition-transform duration-300 ease-in-out hover:bg-blue-600"
+                        type="submit" value="Login">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const registerSection = document.getElementById('register-section');
+        const loginSection = document.getElementById('login-section');
+
+        // Check URL hash to determine active section
+        const hash = window.location.hash;
+        if (hash === '#register') {
+            registerSection.classList.add('bg-gray-200');
+            loginSection.classList.remove('bg-gray-200');
+        } else if (hash === '#login') {
+            loginSection.classList.add('bg-gray-200');
+            registerSection.classList.remove('bg-gray-200');
+        }
+
+        // Event listeners to handle highlighting
+        document.querySelector('form[action="/user/register"]').addEventListener('submit', () => {
+            registerSection.classList.add('bg-gray-200');
+            loginSection.classList.remove('bg-gray-200');
+            window.location.hash = '#register';
+        });
+
+        document.querySelector('form[action="/user/login"]').addEventListener('submit', () => {
+            loginSection.classList.add('bg-gray-200');
+            registerSection.classList.remove('bg-gray-200');
+            window.location.hash = '#login';
+        });
+    });
+</script>

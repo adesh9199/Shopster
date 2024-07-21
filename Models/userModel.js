@@ -13,7 +13,7 @@ cart:{
     type:Array,
     default:[],
 },
-isadmin:Boolean,
+
 orders:{
     type:Array,
     default:[],
