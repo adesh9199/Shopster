@@ -2,16 +2,178 @@
 <html lang="en">
 
 <head>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Pitara</title>
-        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
-    </head>
-    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopster</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <link href="/css/tailwind.css" rel="stylesheet">
+    <style>
+        .dark-mode {
+            background-color: #1e293b;
+            color: white;
+        }
+
+        .light-mode {
+            background-color: #fff;
+            color: black;
+        }
+        .hidden {
+    display: none;
+}
+
+.relative:hover .hidden {
+    display: block;
+}
+
+    </style>
 </head>
 
-<body class="font-['helvetica_now_display']">
-    <nav class="w-full fixed top-0 left-0 px-5 py-3">
-        <h3 class="text-2xl text-white">Pitara</h3>
+<body class="font-['helvetica_now_display'] light-mode">
+    <nav class="w-full  right-4 px-5 py-3 flex justify-between items-center mb-4">
+        <h3 class="text-xl">Shopster</h3>
+        <% var loggedin =typeof loggedin  !== "undefined" ? loggedin :true%>
+        <% if(loggedin) {%>
+        <div class="flex gap-5">
+            <a href="/shop">Shop</a>
+          
+            <a href="">My Account</a>
+            <a class="text-red-500 " href="/users/logout"> <i class="ri-logout-circle-r-line"></i>   Logout</a>
+            <a href="/cart"><i class="ri-shopping-cart-2-line hover:text-2xl text-xl"></i></a>
+            <button id="theme-toggle" class="text-2xl">
+                <i id="theme-icon" class="ri-moon-line"></i>
+            </button>
+        </div>
+        <% } %>
     </nav>
+
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const body = document.body;
+
+        themeToggleBtn.addEventListener('click', () => {
+            if (body.classList.contains('light-mode')) {
+                body.classList.remove('light-mode');
+                body.classList.add('dark-mode');
+                themeIcon.classList.remove('ri-moon-line');
+                themeIcon.classList.add('ri-sun-line');
+            } else {
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+                themeIcon.classList.remove('ri-sun-line');
+                themeIcon.classList.add('ri-moon-line');
+            }
+        });
+     
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle the error message fading out
+    const error = document.getElementById('error');
+    if (error) {
+        setTimeout(() => {
+            error.style.transition = 'opacity 0.5s';
+            error.style.opacity = '0';
+            setTimeout(() => {
+                error.remove();
+            }, 500);
+        }, 2000);
+    }
+
+    const registerSection = document.getElementById('register-section');
+    const loginSection = document.getElementById('login-section');
+    const adminLoginBtn = document.getElementById('admin-login-btn');
+    const adminLoginDropdown = document.getElementById('admin-login-dropdown');
+
+    // Event listeners for resizing sections (assuming these are meant for demonstration)
+    if (registerSection && loginSection) {
+        registerSection.addEventListener('click', () => {
+            registerSection.style.width = '55%'; // Adjusted width value for better fit
+            loginSection.style.width = '45%';
+        });
+
+        loginSection.addEventListener('click', () => {
+            registerSection.style.width = '45%';
+            loginSection.style.width = '55%';
+        });
+    }
+
+    // Event listener to show/hide the admin login dropdown
+    if (adminLoginBtn && adminLoginDropdown) {
+        adminLoginBtn.addEventListener('mouseover', () => {
+            adminLoginDropdown.classList.remove('hidden');
+        });
+
+        adminLoginBtn.addEventListener('mouseout', () => {
+            setTimeout(() => {
+                if (!adminLoginDropdown.matches(':hover')) {
+                    adminLoginDropdown.classList.add('hidden');
+                }
+            }, 200);
+        });
+
+        adminLoginDropdown.addEventListener('mouseleave', () => {
+            adminLoginDropdown.classList.add('hidden');
+        });
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!loginSection.contains(event.target) && !adminLoginDropdown.contains(event.target) && !adminLoginBtn.contains(event.target)) {
+            adminLoginDropdown.classList.add('hidden');
+        }
+    });
+});
+
+        const error = document.getElementById('error');
+        if (error) {
+            setTimeout(() => {
+                error.style.transition = 'opacity 0.5s';
+                error.style.opacity = '0';
+                setTimeout(() => {
+                    error.remove();
+                }, 500); 
+            }, 2000); 
+        }
+
+        const registerSection = document.getElementById('register-section');
+        const loginSection = document.getElementById('login-section');
+        const adminLoginBtn = document.getElementById('admin-login-btn');
+        const adminLoginDropdown = document.getElementById('admin-login-dropdown');
+
+        registerSection.addEventListener('click', () => {
+            registerSection.style.width = '1/4'; // Adjust width as needed
+            loginSection.style.width = '3/4'; // Adjust width as needed
+        });
+
+        loginSection.addEventListener('click', () => {
+            registerSection.style.width = '3/4'; // Adjust width as needed
+            loginSection.style.width = '1/4'; // Adjust width as needed
+        });
+
+        adminLoginBtn.addEventListener('mouseover', () => {
+            adminLoginDropdown.classList.remove('hidden');
+        });
+
+        adminLoginBtn.addEventListener('mouseout', () => {
+            // To keep dropdown visible while the user is interacting with it
+            setTimeout(() => {
+                if (!adminLoginDropdown.matches(':hover')) {
+                    adminLoginDropdown.classList.add('hidden');
+                }
+            }, 200);
+        });
+
+        adminLoginDropdown.addEventListener('mouseleave', () => {
+            adminLoginDropdown.classList.add('hidden');
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!loginSection.contains(event.target) && !adminLoginDropdown.contains(event.target) && !adminLoginBtn.contains(event.target)) {
+                adminLoginDropdown.classList.add('hidden');
+            }
+        });
+
+
+
+    </script>
+

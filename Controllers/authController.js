@@ -1,55 +1,62 @@
-const usermodel = require("../Models/userModel");
-const bcrypt= require("bcryptjs");
-const jwt=require("jsonwebtoken")
-const {generateTokens}=require("../utills/generateTokens")
+const userModel = require("../models/user-model");
+const bcrypt = require("bcryptjs");
+const { generateToken } = require("../utils/generateToken");
 
+module.exports.registerUser = async function (req, res) {
+  try {
+    let { email, password, fullname } = req.body;
 
-module.exports.registerUser=async (req, res) => {
-    try {
-        const { fullname, password, email } = req.body;
-            
-        bcrypt.genSalt(10 ,(err , salt)=>{
-            bcrypt.hash(password , salt, async(err, hash)=>{
-                if(err) return res.send(err.message)
-                    else{
-                }
-                
-        if (!fullname || !password || !email) {
-            return res.status(400).send("Please fill all details properly");
-        }
-
-        let user = await usermodel.findOne({ email });
-        if (user) {
-            return res.status(409).send(`User with email ${email} already exists. Try logging in.`);
-        }
-
-        user = new usermodel({ fullname, password:hash, email });
-        await user.save();
-     
-        let token =generateTokens(user);
-        res.cookie("token", token);
-
-       
-        res.status(201).send("User registered successfully.");
-            })
-        })
-     
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send("Internal server error.");
+    let user = await userModel.findOne({ email: email });
+    if (user) {
+      req.flash("error", "You already have an account, please login.");
+      return res.redirect("/");
     }
+ 
+    bcrypt.genSalt(10, function (err, salt) {
+      bcrypt.hash(password, salt, async function (err, hash) {
+        if (err) return res.send(err.message);
+        else {
+          let user = await userModel.create({
+            email,
+            password: hash,
+            fullname,
+          });
+          
+ 
+          let token = generateToken(user);
+          res.cookie("token", token);
+
+          res.redirect("/shop");
+        }
+      });
+    });
+  } catch (err) {
+    res.send(err.message);
+  }
 };
-module.exports.loginUser=async (req, res)=>{
-    let {email, password}=req.body;
-  let user = await  usermodel.findOne({email:email});
-  if(!user) return res.send("incorrect credentials , Create Account first");
 
-  bcrypt.compare(password , user.password , (err, result)=>{
-    if (err)res.status(401).send(err.message);
-    res.send(result);
+module.exports.loginUser = async function (req, res) {
+  let { email, password } = req.body;
 
-     let token = generateTokens(user);
-     res.cookie("token", token);
-  } )
+  let user = await userModel.findOne({ email: email });
+  if (!user) {
+    req.flash("error", "Email or Password incorrect");
+    return res.redirect("/");
+  }
 
-}
+  bcrypt.compare(password, user.password, function (err, result) {
+    if (result) {
+      let token = generateToken(user);
+      res.cookie("token", token);
+      res.redirect("/shop");
+    } else {
+      req.flash("error", "Email or Password incorrect");
+      return res.redirect("/");
+    }
+  });
+};
+
+module.exports.logout = function (req, res) {
+  res.cookie("token", "");
+  res.redirect("/");
+};

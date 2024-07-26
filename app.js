@@ -1,28 +1,38 @@
-const express=require('express');
-const app=express();
-const cookieParser=require('cookie-parser');
-const path=require('path');
-const db=require("./config/mongoose-connect");
-const adminRoute=require("./Router/adminRoute");
-const userRoute=require("./Router/userRoute");
-const productRoute=require("./Router/productRoute");
-const indexRoute=require("./Router/indexRoute");
- require("dotenv").config();// we can use all variable from .env in process
+const express = require("express");
+const app = express();
+const cookieParser = require("cookie-parser");
+const path = require("path");
+const expressSession = require("express-session");
+const flash = require("connect-flash");
+const { z } = require('zod');
 
+require("dotenv").config();
+
+const ownersRouter = require("./routes/ownersRouter");
+const productsRouter = require("./routes/productsRouter");
+const usersRouter = require("./routes/usersRouter");
+const indexRouter = require("./routes/index");
+
+const db = require("./config/mongoose-connection");
 
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname,"public")));
-app.set("view engine","ejs");
+app.use(
+  expressSession({
+    resave: false,
+    saveUninitialized: false,
+    secret: "process.env.EXPRESS_SESSION_SECRET",
+  })
+);
+app.use(flash());
+app.use(express.static(path.join(__dirname, "public")));
+app.set("view engine", "ejs");
+
+app.use("/", indexRouter);
+app.use("/owners", ownersRouter);
+app.use("/users", usersRouter);
+app.use("/products", productsRouter);
 
 
-app.use("/admin" , adminRoute);
-app.use("/user" , userRoute);
-app.use("/product" , productRoute);
-app.use("/" , indexRoute);
-
-const port=3000;
-app.listen(port ,()=>{
-    console.log(`Server running on port ${port}`)
-})
+app.listen(3000);
