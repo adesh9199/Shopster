@@ -4,9 +4,10 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "dev": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:css": "npx tailwindcss -i ./public/css/styles.css -o ./public/css/tailwind.css --watch",
-    "build": "cp -r src functions"
+    "build": "cp -r src/functions functions"
   },
   "keywords": [],
   "author": "",
