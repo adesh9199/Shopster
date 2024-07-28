@@ -4,10 +4,10 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:css": "npx tailwindcss -i ./public/css/styles.css -o ./public/css/tailwind.css --watch",
-    "build": "cp -r src/functions functions"
+    "build": "echo 'Build step complete'",
+    "dev": "node app.js",
+    "build:css": "npx tailwindcss -i ./public/css/styles.css -o ./public/css/tailwind.css --watch"
   },
   "keywords": [],
   "author": "",
@@ -28,7 +28,6 @@
     "multer": "^1.4.5-lts.1",
     "postcss": "^8.4.39",
     "tailwindcss": "^3.4.6",
-    "zod": "^3.23.8",
-    "serverless-http": "^2.7.0"
+    "zod": "^3.23.8"
   }
 }

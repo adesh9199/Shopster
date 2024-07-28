@@ -4,7 +4,6 @@ const cookieParser = require("cookie-parser");
 const path = require("path");
 const expressSession = require("express-session");
 const flash = require("connect-flash");
-const { z } = require('zod');
 require("dotenv").config();
 
 const ownersRouter = require("./routes/ownersRouter");
