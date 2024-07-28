@@ -21,7 +21,7 @@ router.get("/createProducts", isAdminLogin, function (req, res) {
 router.get("/admin", isAdminLogin, async function (req, res) {
   try {
     let products = await productModel.find();
-    res.render("admin", { products });
+    res.render("admin", { products ,loggedin:false });
   } catch (err) {
     res.status(500).send(err.message);
   }

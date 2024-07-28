@@ -31,7 +31,8 @@
 
 <body class="font-['helvetica_now_display'] light-mode">
     <nav class="w-full  right-4 px-5 py-3 flex justify-between items-center mb-4">
-        <h3 class="text-xl">Shopster</h3>
+     
+        <a href="/" class="text-xl">Shopster</a>
         <% var loggedin =typeof loggedin  !== "undefined" ? loggedin :true%>
         <% if(loggedin) {%>
         <div class="flex gap-5">
@@ -40,11 +41,12 @@
             <a href="">My Account</a>
             <a class="text-red-500 " href="/users/logout"> <i class="ri-logout-circle-r-line"></i>   Logout</a>
             <a href="/cart"><i class="ri-shopping-cart-2-line hover:text-2xl text-xl"></i></a>
+            <% } %>
             <button id="theme-toggle" class="text-2xl">
                 <i id="theme-icon" class="ri-moon-line"></i>
             </button>
         </div>
-        <% } %>
+    
     </nav>
 
     <script>
