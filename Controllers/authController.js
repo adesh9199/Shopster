@@ -4,6 +4,7 @@ const { generateToken } = require("../utils/generateToken");
 
 module.exports.registerUser = async function (req, res) {
   try {
+    console.log("HELLO HELLO")
     let { email, password, fullname } = req.body;
 
     let user = await userModel.findOne({ email: email });
