@@ -3,11 +3,15 @@ const router = express.Router();
 const ownerModel = require("../models/owner-model");
 const productModel = require("../models/product-model");
 const isAdminLogin = require("../middlewares/isAdminLogin");
+const path = require('path');
+// const authControllerAdmin = require(path.resolve(__dirname, '../controllers/authControllerAdmin'));
+
 const {
   registerAdmin,
   loginAdmin,
   logout,
-} = require("../controllers/authControllerAdmin");
+} = require(path.resolve(__dirname, '../controllers/authControllerAdmin'));
+
 
 if (process.env.NODE_ENV === "development") {
   router.post("/create", registerAdmin);
