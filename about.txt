@@ -1,0 +1,6 @@
+This favicon was generated using the following font:
+
+- Font Title: Explora
+- Font Author: Copyright 2011 The Explora Project Authors (https://github.com/googlefonts/explora)
+- Font Source: https://fonts.gstatic.com/s/explora/v9/tsstApxFfjUH4wrvc1qPonC3vqc.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))
