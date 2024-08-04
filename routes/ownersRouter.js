@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === "development") {
 
 router.get("/createProducts", isAdminLogin, function (req, res) {
   let success = req.flash("success");
-  res.render("createproducts", { success });
+  res.render("createproducts", { success ,loggedin:false });
 });
 
 router.get("/admin", isAdminLogin, async function (req, res) {
