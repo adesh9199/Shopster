@@ -7,6 +7,10 @@
     <title>Shopster</title>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
     <link href="/css/tailwind.css" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
     <style>
         .dark-mode {
             background-color: #1e293b;
@@ -85,28 +89,45 @@
 </head>
 
 <body class="font-['helvetica_now_display'] light-mode">
-    <nav class="w-full  right-4 px-5 py-3 flex justify-between items-center mb-4">
+    <nav class="w-full px-5 py-3 flex justify-between items-center mb-4">
         <a href="/" class="text-2xl">Shopster</a>
-        <div class="flex gap-5">
-            <a href="/shop">Shop</a>
-        
-            <a href="">My Account</a>
-            <a class="text-red-500 " href="/users/logout"> <i class="ri-logout-circle-r-line"></i>   Logout</a>
-            <a href="/cart"><i class="ri-shopping-cart-2-line hover:text-2xl text-xl"></i></a>
-            <button id="theme-toggle" class="text-2xl">
-                <i id="theme-icon" class="ri-moon-line"></i>
-            </button>
+        <div class="flex gap-10 items-center">
+          <a href="/shop" class="hover:bg-gray-200 hover:rounded-lg hover:scale-105 transition duration-200">Shop</a>
+          <a href="" class="hover:bg-gray-200 hover:rounded-lg hover:scale-105 transition duration-200">My Account</a>
+          <a class="text-red-500 hover:bg-gray-200 hover:rounded-lg hover:scale-105 transition duration-200" href="/users/logout">
+            <i class="ri-logout-circle-r-line"></i> Logout
+          </a>
+          <div class="relative hover:bg-gray-200 hover:rounded-lg hover:scale-105 transition duration-200 p-2">
+            <a href="/cart" class="relative flex items-center">
+              <i class="ri-shopping-cart-2-line text-xl"></i>
+              <span class=" top-0  transform translate-x-1/2 -translate-y-1/2 text-green-600  text-xs font-bold  flex items-center justify-center">
+                <%= users.cart.length %>
+              </span>
+              <span class=" ml-1">Cart</span>
+            </a>
+          </div>
+          
+          <button id="theme-toggle" class="hover:bg-gray-200 hover:rounded-lg hover:scale-105 transition duration-200 text-2xl p-2">
+            <i id="theme-icon" class="ri-moon-line"></i>
+          </button>
         </div>
-        
-    </nav>
-
-    <% if(success.length > 0){ %>
-        <div id="successMessage" class="absolute top-8 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-blue-500">
-            <span class="inline-block mt-1 mb-1 text-white">
-                <%= success %>
-            </span>
+      </nav>
+      
+      
+      
+      <% if(success.length > 0){ %>
+        <div id="successMessage" class="absolute top-8 left-1/2 transform -translate-x-1/2 p-3 flex items-center space-x-2">
+          <div class="bg-green-500 rounded-full p-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 00-1.414 0L9 11.586 6.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l7-7a1 1 0 000-1.414z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <span class="inline-block text-black">
+            <%= success %>
+          </span>
         </div>
-    <% } %>
+      <% } %>
+      
     <div class="w-full h-screen flex px-20 py-20">
         <div class="w-[25%] flex flex-col justify-between h-full group hover:w-[30%] transition-all duration-300 ease-in-out">
             <div class="overflow-hidden group-hover:overflow-visible transition-all duration-300 ease-in-out">

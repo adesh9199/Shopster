@@ -15,7 +15,9 @@ router.get("/shop", isloggedin, async function (req, res) {
   try {
     let products = await productModel.find();
     let success=req.flash("success");
-    res.render("shop", { products , success });
+    let users=await userModel.findOne({email:req.user.email}).populate("cart");
+
+    res.render("shop", { products , success, users });
   } catch (err) {
     console.error('Error fetching products:', err);
     res.status(500).send('Internal Server Error');
