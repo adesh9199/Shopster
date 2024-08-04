@@ -636,6 +636,10 @@ video {
   top: 2rem;
 }
 
+.right-6 {
+  right: 1.5rem;
+}
+
 .float-right {
   float: right;
 }
