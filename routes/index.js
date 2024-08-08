@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const isloggedin = require("../middlewares/isLoggedIn");
 const productModel = require("../models/product-model");
-const isAdminLogin=require("../middlewares/isAdminLogin");
+// const isAdminLogin=require("../middlewares/isAdminLogin");
 const userModel = require("../models/user-model");
 // const isloggedin = require("../middlewares/isLoggedIn");
 
@@ -35,15 +35,7 @@ router.get("/cart", isloggedin, async function (req, res) {
 });
 
 
-router.get("/delete",isAdminLogin, async function (req, res) {
-  try {
-    await productModel.deleteMany({});
-    console.log('All documents deleted successfully');
-  } catch (err) {
-    console.error('Error deleting documents:', err);
-  }
-  res.redirect("/owners/admin");
-});
+
 
 
 

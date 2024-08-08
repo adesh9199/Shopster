@@ -1,111 +1,185 @@
 <%- include('./partials/header') %>
-    <style>
-        .dark-mode {
-            background-color: #1e293b;
-            color: white;
-        }
+<style>
+    /* Existing styles */
+    .dark-mode {
+        background-color: #1e293b;
+        color: white;
+    }
 
-        .light-mode {
-            background-color: #fff;
-            color: black;
-        }
+    .light-mode {
+        background-color: #fff;
+        color: black;
+    }
 
-        .hidden {
-            display: none;
-        }
+    .hidden {
+        display: none;
+    }
 
-        .relative:hover .hidden {
-            display: block;
-        }
+    .relative:hover .hidden {
+        display: block;
+    }
 
-        /* Ensure flex container has the right properties */
-        .flex-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.25rem; /* Tailwind gap-5 equivalent */
-        }
+    /* Ensure flex container has the right properties */
+    .flex-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.25rem; /* Tailwind gap-5 equivalent */
+    }
 
-        /* Ensure flex items take up 1/4th of the container width */
-        .flex-item {
-            width: calc(25% - 1.25rem); /* 25% width minus gap */
-            flex-shrink: 0;
-            height: 19rem;
-            display: flex;
-            flex-direction: column;
-            background-color: #f9f9f9; /* Default background color */
-            border: 1px solid #ddd; /* Border for visual separation */
-            border-radius: 0.5rem; /* Rounded corners */
-            overflow: hidden; /* Hide overflow for rounded corners */
-        }
+    /* Ensure flex items take up 1/4th of the container width */
+    .flex-item {
+        width: calc(25% - 1.25rem); /* 25% width minus gap */
+        flex-shrink: 0;
+        height: 19rem;
+        display: flex;
+        flex-direction: column;
+        background-color: #f9f9f9; /* Default background color */
+        border: 1px solid #ddd; /* Border for visual separation */
+        border-radius: 0.5rem; /* Rounded corners */
+        overflow: hidden; /* Hide overflow for rounded corners */
+    }
 
-        .product-image {
-            height: 14rem; /* Reduced height */
-            background-color: #e0e0e0; /* Default background color for image area */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden; /* Ensure image doesn't overflow */
-        }
+    .product-image {
+        height: 14rem; /* Reduced height */
+        background-color: #e0e0e0; /* Default background color for image area */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden; /* Ensure image doesn't overflow */
+    }
 
-        .product-image img {
-            max-height: 100%;
-            width: auto;
-            object-fit: cover;
-        }
+    .product-image img {
+        max-height: 100%;
+        width: auto;
+        object-fit: cover;
+    }
 
-        .product-info {
-            padding: 0.75rem; /* Reduced padding */
-            background-color: #fff; /* Background color for info section */
-        }
+    .product-info {
+        padding: 0.75rem; /* Reduced padding */
+        background-color: #fff; /* Background color for info section */
+    }
 
-        .product-info h3 {
-            margin: 0;
-            font-size: 1rem; /* Reduced font size */
-        }
+    .product-info h3 {
+        margin: 0;
+        font-size: 1rem; /* Reduced font size */
+    }
 
-        .product-info h4 {
-            margin: 0.25rem 0 0;
-            font-size: 0.875rem; /* Reduced font size */
-        }
-        .discount{
-          color: rgb(13, 177, 13);
-          border: 2px solid black;
-          background: #fff;
-          float: right;
-        }
-    </style>
+    .product-info h4 {
+        margin: 0.25rem 0 0;
+        font-size: 0.875rem; /* Reduced font size */
+    }
 
+    .discount {
+        color: rgb(13, 177, 13);
+        border: 2px solid black;
+        background: #fff;
+        float: right;
+        padding: 0.2rem 0.5rem; /* Adjust padding for better appearance */
+        border-radius: 0.25rem; /* Slightly rounded corners */
+    }
+
+    /* Style for the password form */
+    .password-form {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 2rem;
+        border: 1px solid #ddd;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+
+    .password-form input {
+        margin-bottom: 1rem;
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        border-radius: 0.25rem;
+    }
+
+    .password-form button {
+        background-color: #007bff;
+        color: white;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 0.25rem;
+        cursor: pointer;
+    }
+
+    .password-form button:hover {
+        background-color: #0056b3;
+    }
+
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+</style>
 
 <div class="w-full h-screen flex px-20 py-20">
     <div class="w-[25%] flex flex-col justify-between h-full border-r border-gray-200 pr-5">
         <div class="flex flex-col mt-10">
             <a class="block mb-4 text-lg font-medium text-gray-700 hover:text-gray-900" href="">All Products</a>
             <a class="block mb-4 text-lg font-medium text-gray-700 hover:text-gray-900" href="/owners/createProducts">Create New Product</a>
-            
-    <a class="text-red-500 text-lg font-medium mb-4 hover:underline" href="/delete">Delete All</a>
+            <a class="text-red-500 text-lg font-medium mb-4 hover:underline" href="#" id="deleteAll">Delete All</a>
             <a class="block text-lg font-medium text-gray-700 hover:text-red-500" href="/owners/logout">
                 <i class="ri-logout-circle-r-line"></i> Logout
             </a>
         </div>
     </div>
- 
+
     <div class="w-[75%] h-screen flex-container">
-        
         <% products.forEach(product => { %>
             <div class="flex-item">
                 <div class="product-image" style="background-color: <%= product.bgcolor %>;">
-                    <img src="data:image/jpeg;base64,<%= product.image.toString('base64') %>" alt="">
+                    <img src="data:image/jpeg;base64,<%= product.image.toString('base64') %>" alt="<%= product.name %>">
                 </div>
                 <div class="product-info" style="background-color: <%= product.panelcolor %>; color: <%= product.textcolor %>;">
                     <div>
                         <h3 class="text-lg font-semibold"><%= product.name %></h3>
-                        <h4 class="text-md font-semibold">₹ <%= product.price %> <span class=" discount inline-block ml-2 px-2 py-1 text-xs rounded-full"><%= product.discount %>% off</span></h4>
+                        <h4 class="text-md font-semibold">₹ <%= product.price %> <span class="discount inline-block ml-2 text-xs rounded-full"><%= product.discount %>% off</span></h4>
                     </div>
-                   
                 </div>
             </div>
         <% }); %>
     </div>
-     </div>
 </div>
+
+<!-- Password confirmation form -->
+<div class="overlay" id="overlay"></div>
+<div class="password-form" id="passwordForm">
+    <h2 class="text-lg font-semibold mb-4">Confirm Deletion</h2>
+    <p>
+        <span>Are you sure you want to delete all products? </span>
+<div class="text-gray-500 opacity-0.6" >
+         This action cannot be <span class="text-red-500"> undone. </span></div> </p>
+    <form id="deleteForm" action="/owners/delete" method="POST">
+        <input type="password" name="password" placeholder="Enter admin password" required>
+        <button type="submit">Confirm</button>
+    </form>
+    <button id="cancelDelete">Cancel</button>
+</div>
+
+<script>
+    document.getElementById('deleteAll').addEventListener('click', function(event) {
+        event.preventDefault();
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('passwordForm').style.display = 'block';
+    });
+
+    document.getElementById('cancelDelete').addEventListener('click', function() {
+        document.getElementById('overlay').style.display = 'none';
+        document.getElementById('passwordForm').style.display = 'none';
+    });
+</script>
+
 <%- include('./partials/footer') %>

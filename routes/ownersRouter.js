@@ -8,6 +8,7 @@ const {
   registerAdmin,
   loginAdmin,
   logout,
+  deleteProducts,
 } = require("../controllers/authControllerAdmin");
 
 if (process.env.NODE_ENV === "development") {
@@ -34,5 +35,7 @@ router.get("/login", function (req, res) {
 
 router.post("/loginAdmin", loginAdmin);
 router.get("/logout", logout);
+
+router.post("/delete",isAdminLogin, deleteProducts);
 
 module.exports = router;

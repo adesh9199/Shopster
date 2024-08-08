@@ -1,62 +1,188 @@
-<%- include('./partials/header') %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Website</title>
+    <!-- Tailwind CSS CDN for quick setup -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@^2.2/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles for preloader */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; /* Make sure it's on top of everything */
+        }
 
-<% if (error.length > 0) { %>
-    <div id="error" class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-red-500">
-        <span class="inline-block mt-1 mb-1 text-white">
-            <%= error %>
-        </span>
-    </div>
-<% } %>
+        .preloader-text {
+            display: flex;
+            font-size: 3rem;
+            font-weight: bold;
+            gap: 0.5rem;
+            animation: fadeIn 1s forwards;
+        }
 
-<div class="w-full h-screen flex  px-20">
-    <!-- Register Section -->
-    <div id="register-section" class="w-1/2 flex items-center justify-center mb-10   border-gray-300 transition-width duration-300">
-        <div class="w-full px-32">
-            <h3 class="text-4xl">Welcome to <span class="text-blue-400 font-semibold">Shopster</span></h3>
-            <h4 class="text-2xl mb-5">Create your account</h4>
-            <form autocomplete="off" action="/users/register" method="post">
-                <input
-                    class="bg-zinc-100 block w-full px-3 py-2 border-[1px] rounded-md mb-3 border-zinc-200"
-                    type="text" placeholder="Full Name" name="fullname">
-                <input
-                    class="bg-zinc-100 block w-full px-3 py-2 border-[1px] rounded-md mb-3 border-zinc-200"
-                    type="email" placeholder="Email" name="email">
-                <input
-                    class="bg-zinc-100 block w-full px-3 py-2 border-[1px] rounded-md mb-3 border-zinc-200"
-                    type="password" placeholder="Password" name="password">
-                <input class="px-5 rounded-full py-3 mt-2 bg-blue-500 text-white hover:bg-blue-300" type="submit" value="Create My Account">
-            </form>
+        .preloader-text span {
+            display: inline-block;
+            opacity: 0;
+            transform: scale(0);
+            background: linear-gradient(45deg, #f06, #48f); /* Gradient color */
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent; /* Text color is transparent to show gradient */
+            animation: flyIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes flyIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-50vh) scale(0);
+            }
+            50% {
+                opacity: 0.5;
+                transform: translateY(0) scale(1.5);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .preloader-text span:nth-child(1) { animation-delay: 0s; }
+        .preloader-text span:nth-child(2) { animation-delay: 0.1s; }
+        .preloader-text span:nth-child(3) { animation-delay: 0.2s; }
+        .preloader-text span:nth-child(4) { animation-delay: 0.3s; }
+        .preloader-text span:nth-child(5) { animation-delay: 0.4s; }
+        .preloader-text span:nth-child(6) { animation-delay: 0.5s; }
+        .preloader-text span:nth-child(7) { animation-delay: 0.6s; }
+        .preloader-text span:nth-child(8) { animation-delay: 0.7s; }
+        .preloader-text span:nth-child(9) { animation-delay: 0.8s; }
+
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="preloader" class="flex items-center justify-center">
+        <div class="preloader-text">
+            <span>S</span>
+            <span>h</span>
+            <span>o</span>
+            <span>p</span>
+            <span>s</span>
+            <span>t</span>
+            <span>e</span>
+            <span>r</span>
         </div>
     </div>
 
-    <!-- Separator -->
+    <!-- Your existing content -->
+    <%- include('./partials/header') %>
 
-    <!-- Login Section -->
-    <div id="login-section" class="w-1/2 flex items-center justify-center mt-14  transition-width duration-300 relative">
-        <div class="h-10 w-1 rounded-full bg-black text-black">.</div>
-        <div class="w-full px-32">
-            <h4 class="text-2xl capitalize mb-5">Login to your account</h4>
-            <form autocomplete="off" action="/users/login" method="post">
-                <input
-                    class="block bg-zinc-100 w-full px-3 py-2 border-[1px] rounded-md mb-3 border-zinc-200"
-                    type="email" placeholder="Email" name="email">
-                <input
-                    class="block bg-zinc-100 w-full px-3 py-2 border-[1px] rounded-md mb-3 border-zinc-200"
-                    type="password" placeholder="Password" name="password">
-                <div class="flex items-center">
-                    <input class="px-5 block rounded-full py-3 mt-2 bg-blue-500 text-white" type="submit" value="Login">
-                    
-                    
-                </div>
-            </form>
-            <div class="mt-5">
-                <a href="/owners/login"><button class="float-right mt-[5rem]  hover:text-green-500">Admin Login <i class="ri-arrow-right-line"></i></button></a>
-                
+    <% if (error.length > 0) { %>
+        <div id="error" class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-red-500">
+            <span class="inline-block mt-1 mb-1 text-white">
+                <%= error %>
+            </span>
+        </div>
+    <% } %>
 
+    <div class="w-full h-screen flex px-20">
+        <!-- Register Section -->
+        <div id="register-section" class="w-1/2 flex items-center justify-center mb-10 border-gray-300 transition-width duration-300">
+            <div class="w-full px-32">
+                <h3 class="text-4xl">Welcome to <span class="text-blue-400 font-semibold">Shopster</span></h3>
+                <h4 class="text-2xl mb-5">Create your account</h4>
+                <form autocomplete="off" action="/users/register" method="post">
+                    <input class="bg-zinc-100 block w-full px-3 py-2 border-[1px] rounded-md mb-3 border-zinc-200" type="text" placeholder="Full Name" name="fullname">
+                    <input class="bg-zinc-100 block w-full px-3 py-2 border-[1px] rounded-md mb-3 border-zinc-200" type="email" placeholder="Email" name="email">
+                    <input class="bg-zinc-100 block w-full px-3 py-2 border-[1px] rounded-md mb-3 border-zinc-200" type="password" placeholder="Password" name="password">
+                    <input class="px-5 rounded-full py-3 mt-2 bg-blue-500 text-white hover:bg-blue-300" type="submit" value="Create My Account">
+                </form>
             </div>
-           
+        </div>
+
+        <!-- Separator -->
+
+        <!-- Login Section -->
+        <div id="login-section" class="w-1/2 flex items-center justify-center mt-14 transition-width duration-300 relative">
+            <div class="h-10 w-1 rounded-full bg-black text-black">.</div>
+            <div class="w-full px-32">
+                <h4 class="text-2xl capitalize mb-5">Login to your account</h4>
+                <form autocomplete="off" action="/users/login" method="post">
+                    <input class="block bg-zinc-100 w-full px-3 py-2 border-[1px] rounded-md mb-3 border-zinc-200" type="email" placeholder="Email" name="email">
+                    <input class="block bg-zinc-100 w-full px-3 py-2 border-[1px] rounded-md mb-3 border-zinc-200" type="password" placeholder="Password" name="password">
+                    <div class="flex items-center">
+                        <input class="px-5 block rounded-full py-3 mt-2 bg-blue-500 text-white" type="submit" value="Login">
+                    </div>
+                </form>
+                <div class="mt-5">
+                    <a href="/owners/login"><button class="float-right mt-[5rem] hover:text-green-500">Admin Login <i class="ri-arrow-right-line"></i></button></a>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
-<%- include('./partials/footer') %>
+    <%- include('./partials/footer') %>
+
+    <!-- JavaScript to handle preloader and location -->
+    <script>
+        // Function to get location and reverse geocode
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const { latitude, longitude } = position.coords;
+                        console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+
+                        // Fetch location details from a reverse geocoding API
+                        fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`)
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log(`Location: ${data.display_name}`);
+                            })
+                            .catch(error => {
+                                console.error('Error fetching location details:', error);
+                            });
+                    },
+                    (error) => {
+                        console.error('Error:', error);
+                        alert('Unable to retrieve your location. Please update your browser or enable location services.');
+                    }
+                );
+            } else {
+                alert('Geolocation is not supported by this browser.');
+            }
+        }
+
+        // Preloader logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const preloader = document.getElementById('preloader');
+            const mainContent = document.querySelector('.w-full.h-screen.flex.px-20');
+
+            if (preloader) {
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                    if (mainContent) {
+                        mainContent.style.display = 'flex';
+                    }
+                }, 1500); // Adjust this timeout to match your animation duration
+
+                // Call getLocation on page load
+                getLocation();
+            }
+        });
+    </script>
+</body>
+</html>
